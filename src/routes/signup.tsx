@@ -16,6 +16,7 @@ export const Route = createFileRoute("/signup")({
 
 function SignUp() {
   const router = useRouter();
+  const navigate = useNavigate();
   return (
     <AuthShell>
       <button
