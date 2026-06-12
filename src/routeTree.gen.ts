@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingTimetableRouteImport } from './routes/onboarding.timetable'
+import { Route as OnboardingSubjectsRouteImport } from './routes/onboarding.subjects'
+import { Route as OnboardingNotificationsRouteImport } from './routes/onboarding.notifications'
+import { Route as OnboardingCollegeRouteImport } from './routes/onboarding.college'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -28,35 +32,93 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingTimetableRoute = OnboardingTimetableRouteImport.update({
+  id: '/onboarding/timetable',
+  path: '/onboarding/timetable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingSubjectsRoute = OnboardingSubjectsRouteImport.update({
+  id: '/onboarding/subjects',
+  path: '/onboarding/subjects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingNotificationsRoute = OnboardingNotificationsRouteImport.update({
+  id: '/onboarding/notifications',
+  path: '/onboarding/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingCollegeRoute = OnboardingCollegeRouteImport.update({
+  id: '/onboarding/college',
+  path: '/onboarding/college',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/onboarding/college': typeof OnboardingCollegeRoute
+  '/onboarding/notifications': typeof OnboardingNotificationsRoute
+  '/onboarding/subjects': typeof OnboardingSubjectsRoute
+  '/onboarding/timetable': typeof OnboardingTimetableRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/onboarding/college': typeof OnboardingCollegeRoute
+  '/onboarding/notifications': typeof OnboardingNotificationsRoute
+  '/onboarding/subjects': typeof OnboardingSubjectsRoute
+  '/onboarding/timetable': typeof OnboardingTimetableRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/onboarding/college': typeof OnboardingCollegeRoute
+  '/onboarding/notifications': typeof OnboardingNotificationsRoute
+  '/onboarding/subjects': typeof OnboardingSubjectsRoute
+  '/onboarding/timetable': typeof OnboardingTimetableRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/onboarding/college'
+    | '/onboarding/notifications'
+    | '/onboarding/subjects'
+    | '/onboarding/timetable'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup'
-  id: '__root__' | '/' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/onboarding/college'
+    | '/onboarding/notifications'
+    | '/onboarding/subjects'
+    | '/onboarding/timetable'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/onboarding/college'
+    | '/onboarding/notifications'
+    | '/onboarding/subjects'
+    | '/onboarding/timetable'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  OnboardingCollegeRoute: typeof OnboardingCollegeRoute
+  OnboardingNotificationsRoute: typeof OnboardingNotificationsRoute
+  OnboardingSubjectsRoute: typeof OnboardingSubjectsRoute
+  OnboardingTimetableRoute: typeof OnboardingTimetableRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +144,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/timetable': {
+      id: '/onboarding/timetable'
+      path: '/onboarding/timetable'
+      fullPath: '/onboarding/timetable'
+      preLoaderRoute: typeof OnboardingTimetableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/subjects': {
+      id: '/onboarding/subjects'
+      path: '/onboarding/subjects'
+      fullPath: '/onboarding/subjects'
+      preLoaderRoute: typeof OnboardingSubjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/notifications': {
+      id: '/onboarding/notifications'
+      path: '/onboarding/notifications'
+      fullPath: '/onboarding/notifications'
+      preLoaderRoute: typeof OnboardingNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/college': {
+      id: '/onboarding/college'
+      path: '/onboarding/college'
+      fullPath: '/onboarding/college'
+      preLoaderRoute: typeof OnboardingCollegeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  OnboardingCollegeRoute: OnboardingCollegeRoute,
+  OnboardingNotificationsRoute: OnboardingNotificationsRoute,
+  OnboardingSubjectsRoute: OnboardingSubjectsRoute,
+  OnboardingTimetableRoute: OnboardingTimetableRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

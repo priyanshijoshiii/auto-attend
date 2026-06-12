@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { PillInput, PillPasswordInput } from "@/components/auth/PillInput";
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/signup")({
 
 function SignUp() {
   const router = useRouter();
+  const navigate = useNavigate();
   return (
     <AuthShell>
       <button
@@ -38,7 +39,10 @@ function SignUp() {
 
       <form
         className="mt-8 flex flex-col gap-3"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          navigate({ to: "/onboarding/college" });
+        }}
       >
         <PillInput type="text" placeholder="Full name" autoComplete="name" />
         <PillInput type="email" placeholder="Email" autoComplete="email" />
