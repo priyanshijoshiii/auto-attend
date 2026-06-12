@@ -39,7 +39,10 @@ function SignUp() {
 
       <form
         className="mt-8 flex flex-col gap-3"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          navigate({ to: "/onboarding/college" });
+        }}
       >
         <PillInput type="text" placeholder="Full name" autoComplete="name" />
         <PillInput type="email" placeholder="Email" autoComplete="email" />
