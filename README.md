@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase" />
 <img src="https://img.shields.io/badge/status-in%20development-F0D44A?style=flat-square" />
 
-# Attenda
+# Auto-Attend
 
 ### Automatic attendance tracking for college students — no tapping required.
 
