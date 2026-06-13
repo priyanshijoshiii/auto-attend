@@ -9,6 +9,8 @@
 
 ### Automatic attendance tracking for college students — no tapping required.
 
+> 🚧 Work in progress — currently in UI design phase. Not yet functional.
+
 </div>
 
 ---
@@ -17,7 +19,7 @@
 
 Every college student in India tracks attendance manually — opening an app after every class, tapping present or absent, trying to remember if they actually went. Most forget. Most lose track. And then week 12 arrives and they're below 75% with no way out.
 
-Attenda fixes this by tracking attendance automatically using your phone's GPS. You set your classroom location once. The app does the rest — silently, in the background, every single day.
+Auto-Attend fixes this by tracking attendance automatically using your phone's GPS. You set your classroom location once. The app does the rest — silently, in the background, every single day.
 
 ---
 
@@ -25,7 +27,7 @@ Attenda fixes this by tracking attendance automatically using your phone's GPS. 
 
 1. **Set up your schedule** — add subjects, class timings, and pin your classroom location once
 2. **Carry your phone to class** — that's it
-3. **Attenda detects when you're inside the classroom** using a GPS geofence and marks you present automatically
+3. **Auto-Attend detects when you're inside the classroom** using a GPS geofence and marks you present automatically
 4. **If something changes** — class cancelled, proxy, holiday — you update it manually in one tap
 5. **Check your dashboard anytime** — see your attendance percentage per subject, how many classes you can still skip safely, and a full semester log
 
@@ -33,14 +35,11 @@ Attenda fixes this by tracking attendance automatically using your phone's GPS. 
 
 ## Features
 
-- Automatic GPS-based attendance marking (background geofencing)
-- Per-subject attendance percentage, live
-- "Safe skips" calculator — know exactly how many more you can afford
-- Manual override for cancelled classes, medical leave, holidays
-- At-risk alerts when a subject drops below 75%
-- Monthly calendar view with present / absent / cancelled markers
-- AI-powered schedule setup — type your timetable in plain language
-- Weekly AI summary of your attendance
+- Background geofencing using expo-task-manager — marks attendance silently even when the app is closed
+- Per-subject attendance percentage with a live safe-skips calculator
+- Manual override for cancelled classes, medical leave, and holidays
+- At-risk alerts when any subject drops below 75%
+- Monthly calendar view with per-day present / absent / cancelled breakdown
 - Full semester export
 
 ---
@@ -54,7 +53,6 @@ Attenda fixes this by tracking attendance automatically using your phone's GPS. 
 | Location & geofencing | expo-location + expo-task-manager |
 | Notifications | expo-notifications |
 | Backend & database | Supabase (PostgreSQL + Auth) |
-| AI features | Gemini 1.5 Flash API |
 | Build & deploy | EAS Build + EAS Submit |
 
 ---
@@ -62,26 +60,33 @@ Attenda fixes this by tracking attendance automatically using your phone's GPS. 
 ## Project structure
 
 ```
-AttendanceApp/
-├── app/
-│   ├── (auth)/
-│   │   ├── onboarding.tsx
-│   │   ├── login.tsx
-│   │   └── setup.tsx
-│   ├── (tabs)/
-│   │   ├── index.tsx          # Home dashboard
-│   │   ├── subjects.tsx       # Subject list
-│   │   ├── calendar.tsx       # Monthly view
-│   │   └── profile.tsx        # Settings & export
-│   └── subject/[id].tsx       # Subject detail screen
-├── components/
-├── lib/
-│   ├── supabase.ts
-│   ├── geofence.ts
-│   └── attendance.ts
-├── tasks/
-│   └── backgroundLocation.ts  # Geofence background task
-└── types/
+auto-attend/
+├── frontend/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── welcome.tsx
+│   │   │   ├── login.tsx
+│   │   │   └── signup.tsx
+│   │   ├── (tabs)/
+│   │   │   ├── index.tsx            # Home dashboard
+│   │   │   ├── report.tsx           # Subject list + attendance %
+│   │   │   ├── schedule.tsx         # Weekly timetable
+│   │   │   └── settings.tsx         # Profile + preferences
+│   │   ├── onboarding/
+│   │   │   ├── college.tsx          # College search
+│   │   │   ├── subjects.tsx         # Add subjects
+│   │   │   ├── timetable.tsx        # Build timetable
+│   │   │   └── notifications.tsx
+│   │   └── subject/[id].tsx         # Subject detail + calendar
+│   ├── components/
+│   ├── lib/
+│   │   ├── supabase.ts
+│   │   ├── geofence.ts
+│   │   └── attendance.ts
+│   ├── tasks/
+│   │   └── backgroundLocation.ts
+│   └── types/
+└── README.md
 ```
 
 ---
@@ -89,35 +94,28 @@ AttendanceApp/
 ## Database schema (Supabase)
 
 ```sql
-users            -- auth handled by Supabase
-subjects         -- name, color, minimum_percentage
-schedules        -- subject_id, day_of_week, start_time, end_time
+users                -- auth handled by Supabase
+subjects             -- name, color, type, minimum_percentage
+schedules            -- subject_id, day_of_week, start_time, end_time, room
 classroom_locations  -- subject_id, latitude, longitude, radius_meters
 attendance_records   -- subject_id, date, status (present/absent/cancelled/holiday)
 ```
 
 ---
 
-## Getting started
-
-### Prerequisites
-- Node.js 18+
-- Expo CLI (`npm install -g eas-cli`)
-- Expo Go app on your phone
-- A Supabase project (free tier works)
-
 ## Roadmap
 
 - [x] Project setup and architecture
-- [ ] Auth flow (onboarding, login, schedule setup)
-- [ ] Core schedule management (add/edit subjects)
+- [ ] Auth flow (welcome, login, signup)
+- [ ] Onboarding (college search, subjects, timetable, notifications)
+- [ ] Home dashboard
+- [ ] Report screen + subject detail + calendar view
+- [ ] Schedule screen
 - [ ] GPS geofencing + background attendance marking
-- [ ] Dashboard and subject detail screens
-- [ ] Calendar view
 - [ ] Supabase integration
-- [ ] AI schedule input (Gemini)
-- [ ] Weekly AI summary
-- [ ] Export to PDF
+- [ ] Voice schedule input (Groq Whisper)
+- [ ] AI weekly summary
+- [ ] Settings + safe-skips calculator
 - [ ] Play Store release
 - [ ] App Store release
 
@@ -125,7 +123,11 @@ attendance_records   -- subject_id, date, status (present/absent/cancelled/holid
 
 ## Why this exists
 
-Built by a college student who got tired of manually tracking attendance and missed the 75% cutoff one too many times. Also a learning project — this is my first React Native app, built from scratch while learning mobile development.
+Noticed that almost every student around me was stressing about attendance —
+not because they weren't attending, but because manually tracking it is a mess.
+Missed a log here, forgot to update there, and suddenly you're doing panic maths
+at the end of the semester. There's clearly a gap, and this is my attempt at
+fixing it. Also my first React Native app — building and learning at the same time.
 
 ---
 
