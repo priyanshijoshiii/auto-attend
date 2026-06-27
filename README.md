@@ -17,7 +17,7 @@
 
 ## The problem
 
-Every college student in India tracks attendance manually — opening an app after every class, tapping present or absent, trying to remember if they actually went. Most forget. Most lose track. And then week 12 arrives and they're below 75% with no way out.
+Every college student tracks attendance manually — opening an app after every class, tapping present or absent, trying to remember if they actually went. Most forget. Most lose track. And then week 12 arrives and they're below 75% with no way out.
 
 Auto-Attend fixes this by tracking attendance automatically using your phone's GPS. You set your classroom location once. The app does the rest — silently, in the background, every single day.
 
