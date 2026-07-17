@@ -36,12 +36,17 @@ function NotificationsScreen() {
       </div>
 
       <div className="flex flex-col gap-3 items-center">
-        <PillButton variant="primary" className="w-full">
-          Allow Notifications
-        </PillButton>
-        <button className="text-sm font-semibold text-muted-foreground hover:text-foreground py-1">
+        <Link to="/home" className="contents">
+          <PillButton variant="primary" className="w-full">
+            Allow Notifications
+          </PillButton>
+        </Link>
+        <Link
+          to="/home"
+          className="text-sm font-semibold text-muted-foreground hover:text-foreground py-1"
+        >
           Skip for now
-        </button>
+        </Link>
         <p className="text-xs text-muted-foreground text-center px-6 -mt-1">
           Auto-Attend may take longer to learn your schedule
         </p>
