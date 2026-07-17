@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BellRing } from "lucide-react";
 import { OnboardingShell } from "@/components/onboarding/OnboardingShell";
 import { OnboardingHeader } from "@/components/onboarding/OnboardingHeader";
