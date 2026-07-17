@@ -214,7 +214,7 @@ fixing it. Also my first React Native app — building and learning at the same 
 
 ## License
 
-MIT
+See [LICENSE](./LICENSE).
 
 ---
 
